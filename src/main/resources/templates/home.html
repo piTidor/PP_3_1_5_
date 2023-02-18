@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <input type="button" value="Регистрация User" onclick="window.location.href='/add-user'"/>
+  <input type="button" value="Регистрация User" onclick="window.location.href='/registration'"/>
     <br>
-    <input type="button" value="Регистрация Admin" onclick="window.location.href='/admin-reg'"/>
     <br>
     <input type="button" value="Войти" onclick="window.location.href='/login'"/>
-    <input type="button" value="Пользователи" onclick="window.location.href='/users'"/>
+    <input type="button" value="Моя страница" onclick="window.location.href='/userPage'"/>
     <br>
     <br>
     <form th:action="@{/logout}" method="post">

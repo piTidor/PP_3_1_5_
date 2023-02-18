@@ -1,32 +1,32 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
 <head>
   <meta charset="UTF-8">
-  <title>Редактирование</title>
+  <title>Новый пользователь</title>
   <link rel="stylesheet" th:href="@{/styles/css/main.css}"/>
 </head>
 <body>
 <div class="wrap">
-  <h1>Редактирование</h1>
+  <h1>Новый пользователь</h1>
   <div class="form-wrapper">
-    <form th:method="GET" th:action="@{/user_{id}(id=${user.getId()})}" th:object="${user}">
+    <form th:method="POST" th:action="@{/}" th:object="${user}">
       <div>
-        <label for="name">Имя:</label>
+        <label for="name">Профессия:</label>
         <br/>
         <input type="text" th:field="*{prof}" id="prof" required/>
-        <div class="error" th:if="${#fields.hasErrors('prof')}" th:errors="*{prof}"></div>
+        <div class="error" th:if="${#fields.hasErrors('Prof')}" th:errors="*{Prof}"></div>
       </div>
       <div>
         <label for="name">Имя:</label>
         <br/>
         <input type="text" th:field="*{name}" id="name" required/>
-        <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <div class="error" th:if="${#fields.hasErrors('Name')}" th:errors="*{Name}"></div>
       </div>
       <div>
-        <label for="Surname">Фамилия:</label>
+        <label for="surname">Фамилия:</label>
         <br/>
         <input type="text" th:field="*{surname}" id="surname" required/>
-        <div class="error" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
+        <div class="error" th:if="${#fields.hasErrors('Surname')}" th:errors="*{Surname}"></div>
       </div>
       <div>
         <label for="username">Логин:</label>
@@ -44,6 +44,9 @@
         <option th:value="'1'" th:text="USER"></option>
         <option th:value="'2'" th:text="ADMIN"></option>
       </select>
+
+      <br/>
+      <br/>
       <input type="submit" value="Обновить"/>
       <input type="button" value="Вернуться" onclick="window.location.href='/'"/>
     </form>

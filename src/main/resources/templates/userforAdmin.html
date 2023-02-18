@@ -19,7 +19,7 @@
       <th>Роль</th>
       <th></th>
     </tr>
-<!--    <tr th:block th:each="user : ${users}" class="user-row">-->
+    <tr th:block th:each="user : ${users}" class="user-row">
       <td th:text="${user.getId()}"></td>
       <td th:text="${user.getProf()}"></td>
       <td th:text="${user.getName()}"></td>
@@ -29,14 +29,14 @@
       <td th:text="${user.getRoles()}"></td>
 
       <td class="buttons">
-        <form th:method="GET" th:action="@{/user_{id}/edit-user(id=${user.getId()})}">
+        <form th:method="GET" th:action="@{user_{id}/edit-user(id=${user.getId()})}">
           <input type="submit" value="Обновить"/>
         </form>
         <form th:method="GET" th:action="@{delete/user_{id}(id=${user.getId()})}">
           <input type="submit" value="Удалить"/>
         </form>
       </td>
-<!--    </tr>-->
+    </tr>
     <tr>
       <td></td>
       <td></td>
@@ -48,6 +48,9 @@
       </td>
     </tr>
   </table>
+  <form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+  </form>
 </div>
 </body>
 </html>

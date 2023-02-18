@@ -36,6 +36,10 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     public void addUser(User user) {
         userDao.addUser(user);
     }
+    @Transactional
+    public void addRole(Role user) {
+        userDao.addRole(user);
+    }
 
     @Transactional (readOnly = true)
     @Override
@@ -60,10 +64,14 @@ public class UserServiceImpl implements UserService , UserDetailsService {
         userDao.updateUser(user);
     }
 
+    public User findByUsername(String username) {
+        return userRepo.findUserByUsername(username);
+    }
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findUserByUsername(username);
+        User user = findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User %s not found", username));
         }
@@ -75,13 +83,6 @@ public class UserServiceImpl implements UserService , UserDetailsService {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        User user = repository.findUserByUsername(username);
-//        if (user == null) {
-//            throw new UsernameNotFoundException("User not found");
-//        }
-//        return user;
-//    }
+
 }
 
