@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Role</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:block th:each="user : ${users}" class="user-row">
+        <td th:text="${user.username}"></td>
+        <td> <#list user.roles as role>${role}</#list></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
