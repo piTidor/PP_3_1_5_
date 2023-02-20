@@ -37,6 +37,10 @@ public class RoleController {
     public String page(){
         return "home";
     }
+    @GetMapping("/")
+    public String home(){
+        return "home";
+    }
 
         @GetMapping("/registration")
     public String add(@ModelAttribute("user") User user) {

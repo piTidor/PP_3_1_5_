@@ -40,12 +40,13 @@ public class AdminRoleController {
 
         return "/add-user";
     }
-    @PostMapping()
+    @GetMapping("adr")
     public String saveUser(@ModelAttribute("user") User user) {
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
 
         userService.addUser(user);
-        return "redirect:/";
+        return "redirect:/admin/userforAdmin";
     }
     @GetMapping("/user_{id}/edit-user")
     public String edit(@PathVariable("id") Long id, Model model) {
@@ -57,12 +58,12 @@ public class AdminRoleController {
     public String update(@ModelAttribute("user")  User user) {
 
         userService.updateUser(user);
-        return "redirect:/";
+        return "redirect:/admin/userforAdmin";
     }
 
     @GetMapping("delete/user_{id}")
     public String delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return "redirect:/";
+        return "redirect:/admin/userforAdmin";
     }
 }

@@ -9,7 +9,7 @@
 <div class="wrap">
   <h1>Редактирование</h1>
   <div class="form-wrapper">
-    <form th:method="GET" th:action="@{/user_{id}(id=${user.getId()})}" th:object="${user}">
+    <form th:method="GET" th:action="@{/admin/user_{id}(id=${user.getId()})}" th:object="${user}">
       <div>
         <label for="name">Имя:</label>
         <br/>

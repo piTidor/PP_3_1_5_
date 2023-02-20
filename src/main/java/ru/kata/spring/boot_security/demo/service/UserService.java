@@ -13,7 +13,7 @@ public interface UserService {
     User getUserById(Long id);
     void deleteUser(Long id);
     void updateUser(User user);
-    public void addRole(Role user);
+//    public void addRole(Role user);
 
 
 }
