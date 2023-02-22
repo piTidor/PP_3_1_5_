@@ -25,7 +25,7 @@ public class RoleController {
     @Autowired
     private UserRepo userRepo  ;
 
-    @GetMapping("/userPage")
+    @GetMapping("/user")
     public String home(Principal principal, Model model) {
 
         model.addAttribute("users",userRepo.findUserByUsername(principal.getName()));
@@ -33,27 +33,5 @@ public class RoleController {
         return "/users";
     }
 
-    @GetMapping("/user")
-    public String page(){
-        return "home";
-    }
-    @GetMapping("/")
-    public String home(){
-        return "home";
-    }
 
-        @GetMapping("/registration")
-    public String add(@ModelAttribute("user") User user) {
-
-
-        return "/registration";
-    }
-
-    @PostMapping()
-    public String saveUser(@ModelAttribute("user") User user) {
-        user.setActive(true);
-
-        userService.addUser(user);
-        return "redirect:/home";
-    }
 }

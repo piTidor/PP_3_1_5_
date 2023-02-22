@@ -22,6 +22,7 @@ import javax.persistence.TypedQuery;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -31,12 +32,14 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     private EntityManager entityManager;
     @Autowired
     private UserRepo userRepo;
+
+    private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
-    public UserServiceImpl(UserRepo userRepo, @Lazy PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepo userRepo,RoleService roleService, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
+        this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
-
 
 
     @Transactional
@@ -82,7 +85,16 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     @Transactional
     @Override
     public void updateUser(User user) {
-        userRepo.save(user);;
+        if (!user.getPassword().equals(userRepo.getById(user.getId()).getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        userRepo.save(user);
+    }
+    @Override
+    public void setUserRoles(User user, Set<Long> roleIds) {
+        user.setRoles(roleIds.stream()
+                .map(roleService::findById)
+                .collect(Collectors.toSet()));
     }
 
     public User findByUsername(String username) {
