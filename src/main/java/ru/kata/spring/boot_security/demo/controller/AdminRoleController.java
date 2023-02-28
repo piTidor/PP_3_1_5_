@@ -21,6 +21,8 @@ public class AdminRoleController {
     private UserService userService;
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private RoleService roleService;
 
 //    @GetMapping("")
 //    public  String home(){
@@ -29,7 +31,10 @@ public class AdminRoleController {
         @GetMapping("")
     public String getAllUsers(Model model, Principal principal) {
         List<User> users = userService.getAllUsers();
-        model.addAttribute("user",userRepo.findUserByUsername(principal.getName()));
+        User usersave = new User();
+        model.addAttribute("roles", roleService.getRolesSet());
+        model.addAttribute("usersave", usersave);
+        model.addAttribute("userI",userRepo.findUserByUsername(principal.getName()));
         model.addAttribute("users", users);
         return "24";
     }
@@ -66,9 +71,9 @@ public class AdminRoleController {
 //        userService.deleteUser(id);
 //        return "redirect:/admin/userforAdmin";
 //    }
-    @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user) {
-//        userService.setUserRoles(user, roleIds);
+    @GetMapping("update/{id}")
+    public String update(@ModelAttribute("user") User user, @RequestParam("roleIds") Set<Long> roleIds) {
+        userService.setUserRoles(user, roleIds);
         userService.updateUser(user);
         return "redirect:/admin";
     }

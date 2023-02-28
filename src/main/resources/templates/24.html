@@ -13,8 +13,8 @@
   <div class="row">
     <nav class="navbar navbar-dark bg-dark">
       <div class="text-white fs-6 ps-4">
-        <span class="fw-bold" th:text="${user.getUsername()}">#email</span>
-        with roles: <span th:each="authority : ${user.getAuthorities()}"
+        <span class="fw-bold" th:text="${userI.getUsername()}">#email</span>
+        with roles: <span th:each="authority : ${userI.getAuthorities()}"
                           th:text="${' ' + authority.getAuthority().toString()}">#roles</span>
       </div>
       <div>
@@ -95,8 +95,8 @@
                                       data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body text-center fw-bold">
-                              <form th:method="PATCH" th:object="${user}"
-                                    th:action="@{/admin/{id}(id=${user.id})}"
+                              <form th:method="GET" th:object="${user}"
+                                    th:action="@{/admin/edit/{id}(id=${user.id})}"
                                     th:id="${'editForm' + user.id}">
                                 <label class="form-label" for="modal-id">ID:</label>
                                 <input class="form-control" type="text" th:name="id"
@@ -109,12 +109,12 @@
                                 <label class="form-label" for="modal-name">First
                                   name:</label>
                                 <input class="form-control" type="text" th:name="name"
-                                       th:value="${user.name}" id="modal-name"
+                                       th:value="*{name}" id="modal-name"
                                        required/>
                                 <label class="form-label" for="modal-surname">Last
                                   name:</label>
                                 <input class="form-control" type="text" th:name="surname"
-                                       th:value="${user.surname}" id="modal-surname"
+                                       th:value="*{surname}" id="modal-surname"
                                        required/>
                                 <label class="form-label" for="modal-prof">Proff:</label>
                                 <input class="form-control" type="text" th:name="prof"
@@ -123,10 +123,12 @@
                                 <input class="form-control" type="text" th:name="username"
                                        th:value="${user.username}" id="modal-username" required/>
                                 <label class="form-label" for="modal-password">Password</label>
-                                <input class="form-control" type="text" th:name="password"
+                                <input class="form-control" type="password" th:name="password"
                                        th:value="${user.password}" id="modal-password" required/>
                                 <label class="form-label" for="modal-roles"
                                        th:value="${user.roles}">Roles:</label>
+<!--                                <label class="form-label" for="modal-roles"-->
+<!--                                       th:value="${user.roles}">Roles:</label>-->
 <!--                                <select class="form-select" id="modal-roles" th:name="roleIds"-->
 <!--                                        multiple="multiple" size="2" aria-label="role">-->
 <!--                                  <option th:each="role : ${user.getRoles()}"-->
@@ -134,10 +136,17 @@
 <!--                                          th:text="${role.toString()}"-->
 <!--                                          th:selected="${user.roles.contains(role)}"></option>-->
 <!--                                </select>-->
-                                <select class="form-select" id="modal-roles" th:field="*{roles}" size="2" aria-label="role" multiple >
-                                  <option th:value="'1'" th:text="USER"></option>
-                                  <option th:value="'2'" th:text="ADMIN"></option>
+                                <select class="form-select" id="modal-roles" th:name="roleIds"
+                                        multiple="multiple" size="2" aria-label="role">
+                                  <option th:each="role : ${roles}"
+                                          th:value="${role.id}"
+                                          th:text="${role.toString()}"
+                                          th:selected="${user.roles.contains(role)}"></option>
                                 </select>
+<!--                                <select class="form-select" id="modal-roles" th:field="*{roles}" size="2" aria-label="role" multiple >-->
+<!--                                  <option th:value="'1'" th:text="USER"></option>-->
+<!--                                  <option th:value="'2'" th:text="ADMIN"></option>-->
+<!--                                </select>-->
                               </form>
                             </div>
                             <div class="modal-footer">
@@ -244,14 +253,14 @@
               <h4 class="card-title">Add new user</h4>
             </div>
             <div class="card-body text-center">
-              <form th:method="GET" th:action="@{/admin/adr}" th:object="${user}">
+              <form th:method="GET" th:action="@{/admin/adr}" th:object="${usersave}">
 
 
                 <label class="form-label" for="name">First name:</label>
                 <input class="form-control" type="text" th:field="*{name}" id="name" placeholder="First Name"
                        required/>
-                <div class="form-text text-danger" th:if="${#fields.hasErrors('name')}"
-                     th:errors="*{name}"></div>
+<!--                <div class="form-text text-danger" th:if="${#fields.hasErrors('name')}"-->
+<!--                     th:errors="*{name}"></div>-->
 
                 <label class="form-label" for="surname">Last name:</label>
                 <input class="form-control" type="text" th:field="*{surname}" id="surname" placeholder="Last Name" required/>
@@ -264,7 +273,7 @@
                      th:errors="*{prof}"></div>
 
                 <label class="form-label" for="username">Login:</label>
-                <input class="form-control" type="text" th:field="*{username}" id="username" placeholder="Login" required/>
+                <input class="form-control" type="text" placeholder="Login" th:field="*{username}" id="username"  />
                 <div class="form-text text-danger" th:if="${#fields.hasErrors('username')}"
                      th:errors="*{username}"></div>
 
