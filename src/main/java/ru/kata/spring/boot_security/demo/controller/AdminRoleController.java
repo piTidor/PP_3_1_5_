@@ -71,7 +71,7 @@ public class AdminRoleController {
 //        userService.deleteUser(id);
 //        return "redirect:/admin/userforAdmin";
 //    }
-    @GetMapping("update/{id}")
+    @PatchMapping("update/{id}")
     public String update(@ModelAttribute("user") User user, @RequestParam("roleIds") Set<Long> roleIds) {
         userService.setUserRoles(user, roleIds);
         userService.updateUser(user);

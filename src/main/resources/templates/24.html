@@ -95,8 +95,8 @@
                                       data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body text-center fw-bold">
-                              <form th:method="GET" th:object="${user}"
-                                    th:action="@{/admin/edit/{id}(id=${user.id})}"
+                              <form th:method="PATCH" th:object="${user}"
+                                    th:action="@{/admin/update/{id}(id=${user.id})}"
                                     th:id="${'editForm' + user.id}">
                                 <label class="form-label" for="modal-id">ID:</label>
                                 <input class="form-control" type="text" th:name="id"
