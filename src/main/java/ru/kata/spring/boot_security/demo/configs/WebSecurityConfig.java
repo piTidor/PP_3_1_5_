@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
@@ -23,26 +25,16 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
     private final SuccessUserHandler successUserHandler;
     private final UserDetailsService userDetailsService;
+
 
     public WebSecurityConfig(SuccessUserHandler successUserHandler, UserDetailsService userDetailsService) {
         this.successUserHandler = successUserHandler;
         this.userDetailsService = userDetailsService;
     }
 
-//    @PersistenceContext
-//    private EntityManager entityManager;
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//       auth.userDetailsService(userService)
-//               .passwordEncoder(NoOpPasswordEncoder.getInstance());
-//
-////               .usersByUsernameQuery("select username, password, active from usertable where username=?")
-////               .authoritiesByUsernameQuery("select u.username, ur.roles from usertable u inner join user_roles ur on u.id = ur.user_id where u.username=?");
-//
-//    }
     @Bean
     public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -72,6 +64,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                     .permitAll();
 
+    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("*");
     }
 
 }

@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,16 +29,32 @@ public class AdminRoleController {
 //    public  String home(){
 //        return "24";
 //    }
-        @GetMapping("")
-    public String getAllUsers(Model model, Principal principal) {
-        List<User> users = userService.getAllUsers();
-        User usersave = new User();
-        model.addAttribute("roles", roleService.getRolesSet());
-        model.addAttribute("usersave", usersave);
-        model.addAttribute("userI",userRepo.findUserByUsername(principal.getName()));
-        model.addAttribute("users", users);
-        return "24";
-    }
+@GetMapping()
+public String index(
+        Model model, Principal principal
+) {
+//    User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//    model.addAttribute("authUser",authUser);
+    model.addAttribute("userI",userRepo.findUserByUsername(principal.getName()));
+    model.addAttribute("users", userService.getAllUsers());
+    model.addAttribute("roles",roleService.getRolesSet());
+    model.addAttribute("newUser",new User());
+
+
+    return "admin";
+
+}
+//        @GetMapping("")
+//    public String getAllUsers(Model model, Principal principal) {
+//        List<User> users = userService.getAllUsers();
+//        User usersave = new User();
+//        model.addAttribute("roles", roleService.getRolesSet());
+//        model.addAttribute("usersave", usersave);
+//        model.addAttribute("userI",userRepo.findUserByUsername(principal.getName()));
+//        model.addAttribute("users", users);
+//        return "24";
+//    }
+
 
 //    @GetMapping("/add-user")
 //    public String add(@ModelAttribute("user") User user) {
@@ -45,14 +62,14 @@ public class AdminRoleController {
 //
 //        return "/add-user";
 //    }
-    @GetMapping("adr")
-    public String saveUser(@ModelAttribute("user") User user) {
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setActive(true);
-
-        userService.addUser(user);
-        return "redirect:/admin";
-    }
+//    @GetMapping("adr")
+//    public String saveUser(@ModelAttribute("user") User user) {
+////        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setActive(true);
+//
+//        userService.addUser(user);
+//        return "redirect:/admin";
+//    }
 //    @GetMapping("/user_{id}/edit-user")
 //    public String edit(@PathVariable("id") Long id, Model model) {
 //        model.addAttribute("user", userService.getUserById(id));
@@ -71,16 +88,16 @@ public class AdminRoleController {
 //        userService.deleteUser(id);
 //        return "redirect:/admin/userforAdmin";
 //    }
-    @PatchMapping("update/{id}")
-    public String update(@ModelAttribute("user") User user, @RequestParam("roleIds") Set<Long> roleIds) {
-        userService.setUserRoles(user, roleIds);
-        userService.updateUser(user);
-        return "redirect:/admin";
-    }
+//    @PatchMapping("update/{id}")
+//    public String update(@ModelAttribute("user") User user, @RequestParam("roleIds") Set<Long> roleIds) {
+//        userService.setUserRoles(user, roleIds);
+//        userService.updateUser(user);
+//        return "redirect:/admin";
+//    }
 
-    @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long id) {
-        userService.deleteUser(id);
-        return "redirect:/admin";
-    }
+//    @DeleteMapping("/{id}")
+//    public String delete(@PathVariable("id") Long id) {
+//        userService.deleteUser(id);
+//        return "redirect:/admin";
+//    }
 }
